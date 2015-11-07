@@ -11,3 +11,6 @@
 |
 */
 Route::get('/', 'HomeController@showHome');
+
+
+Route::get('/settings', 'SettingsController@showHome');

@@ -42,7 +42,7 @@
             <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
     </head>
-    <body class="hold-transition skin-blue sidebar-mini">
+    <body class="hold-transition skin-green-light sidebar-mini">
         <div class="wrapper">
 
             <header class="main-header">
@@ -122,14 +122,13 @@
                     <!-- /.search form -->
                     <!-- sidebar menu: : style can be found in sidebar.less -->
                     <ul class="sidebar-menu">
-                        <li class="header">MAIN NAVIGATION</li>
 
                         <!-- Role checking -->
                         <!-- Element -->
                         <li class="treeview">
-                            <a href="{{URL::to('/')}}">
-                                <i class="fa fa-tachometer"></i>
-                                <span>Inicio</span>
+                            <a href="{{URL::to('/settings')}}">
+                                <i class="fa fa-cogs"></i>
+                                <span>Settings</span>
                             </a>
                         </li>
                         <!-- //Element -->
