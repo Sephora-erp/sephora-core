@@ -1,5 +1,6 @@
-@extends('template')
-@section('content')
+<?php
+use App\Http\Helpers\ModuleHelper;
+?>
 @extends('template')
 @section('content')
 <!-- Content Header (Page header) -->
@@ -32,8 +33,12 @@
                                     <td>{{$module['description']}}</td>
                                     <td>{{$module['vendor']}}</td>
                                     <td>{{$module['version']}}</td>
-                                    <td>
-                                        
+                                    <td style='width:120px;'>
+                                        @if(ModuleHelper::isModuleEnabled($module['package']))
+                                            <a type="button" class="btn btn-success btn-flat" href='{{URL::to('/settings/disable-module/'.$module['package'])}}'><i class="fa fa-check"></i> Enabled</a>
+                                        @else
+                                            <a type="button" class="btn btn-danger btn-flat" href='{{URL::to('/settings/enable-module/'.$module['package'])}}'><i class="fa fa-times"></i> Disabled</a>
+                                        @endif
                                     </td>
                                 </tr>
                                 @endforeach

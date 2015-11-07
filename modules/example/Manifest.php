@@ -10,7 +10,9 @@ class example {
         'package' => 'sephora.basic.clients',
         'min-sephora' => '0.0.1',
         'max-sephora' => '0.0.1',
-        'icon' => ''
+        'icon' => '',
+        'has_triggers' => 0,
+        'has_hooks' => 0
     ];
 
 }
