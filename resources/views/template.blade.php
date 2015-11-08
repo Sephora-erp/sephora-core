@@ -1,3 +1,7 @@
+<?php
+
+use App\Http\Helpers\MenusHelper;
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -75,7 +79,6 @@
                                         <p>
                                         </p>
                                     </li>
-                                    <!-- Menu Footer-->
                                     <li class="user-footer">
                                         <div class="pull-left">
                                             <a href="{{URL::to('/settings')}}" class="btn btn-default btn-flat">Ajustes</a>
@@ -123,7 +126,10 @@
                     <!-- sidebar menu: : style can be found in sidebar.less -->
                     <ul class="sidebar-menu">
 
-                        <!-- Role checking -->
+                        <!-- Menus!! -->
+                        <?= MenusHelper::getMenu() ?>
+                        <!-- //Menus!! -->
+
                         <!-- Element -->
                         <li class="treeview">
                             <a href="{{URL::to('/settings')}}">
