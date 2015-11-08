@@ -53,6 +53,3 @@ use App\Http\Helpers\ModuleHelper;
 </section>
 @stop
 
-
-@stop
-
