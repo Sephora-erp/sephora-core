@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Modules extends Migration {
+class Menus extends Migration {
 
     /**
      * Run the migrations.
@@ -11,11 +11,15 @@ class Modules extends Migration {
      * @return void
      */
     public function up() {
-        Schema::create('modules', function (Blueprint $table) {
+        Schema::create('menus', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('package');
-            $table->integer('has_triggers');
-            $table->integer('has_hooks');
+            $table->string('type');
+            $table->string('title');
+            $table->string('uuid');
+            $table->string('icon')->nullable();
+            $table->string('url');
+            $table->string('parent')->nullable();
+            $table->string('package')->nullable();
             //Timestamps
             $table->timestamp('created_at');
             $table->timestamp('updated_at');

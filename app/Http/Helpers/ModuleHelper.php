@@ -4,6 +4,7 @@ namespace App\Http\Helpers;
 
 use stdClass;
 use App\Http\Models\Modules;
+use App\Http\Models\Menus;
 
 class ModuleHelper {
     /*
@@ -62,21 +63,67 @@ class ModuleHelper {
                     $moduleToEnable->package = $tmpObj->basic['package'];
                     $moduleToEnable->has_triggers = $tmpObj->basic['has_triggers'];
                     $moduleToEnable->has_hooks = $tmpObj->basic['has_hooks'];
+                    //Run the migrations
+                    ModuleHelper::runMigrations($moduleFolder);
+                    //Create the menus
+                    ModuleHelper::setMenus($tmpObj->menus);
                     //Save it
                     $moduleToEnable->save();
                 }
             }
         }
     }
-    
+
     /*
      * This function disables the module
      * 
      * @param {String} $package - The package / UUID of the app/module 
      */
-    public static function disableModule($package){
+
+    public static function disableModule($package) {
         $module = Modules::where('package', '=', $package)->first();
         $module->delete();
+    }
+
+    /*
+     * Run's the migrations for the specified module (path)
+     * 
+     * @param {String} $path - The path of the migrations (Module's folder name)
+     */
+
+    public static function runMigrations($path) {
+        //execute the migrations
+        exec('php ' . app_path() . '/../' . 'artisan migrate --path=/modules/' . $path . '/migrations/');
+    }
+
+    /*
+     * Creates the menus entries in the menus table to use it later with the GUI
+     * 
+     * @param {Mixed[]} $menus - The menus in array way
+     */
+
+    public static function setMenus($menus) {
+        //Itera over all the menus and create entries
+        foreach ($menus as $menu) {
+            $newMenu = new Menus();
+            //Set basic properties
+            if (isset($menu['type']))
+                $newMenu->type = $menu['type'];
+            if (isset($menu['title']))
+                $newMenu->title = $menu['title'];
+            if (isset($menu['uuid']))
+                $newMenu->uuid = $menu['uuid'];
+            if (isset($menu['icon']))
+                $newMenu->icon = $menu['icon'];
+            if (isset($menu['url']))
+                $newMenu->url = $menu['url'];
+            if (isset($menu['parent']))
+                $newMenu->parent = $menu['parent'];
+            if (isset($menu['package']))
+                $newMenu->package = $menu['package'];
+            //Create the menu entry
+            $newMenu->save();
+        }
     }
 
 }
