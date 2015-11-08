@@ -38,7 +38,7 @@ class example {
         0 => [
             'type' => 'GET',
             'url' => '/example/child',
-            'action' => 'HomeController@showHome'
+            'action' => '\App\modules\example\core\controllers\ExampleController@actionTest'
         ]
     ];
 }

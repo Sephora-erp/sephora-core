@@ -15,11 +15,11 @@ class ModuleHelper {
     public static function fetchModuleList() {
         $modules = [];
         //Make a scandir of the modules dir
-        $moduleFolders = scandir(app_path() . '/../modules/');
+        $moduleFolders = scandir(app_path() . '/modules/');
         //for each module find their manifest and read it
         foreach ($moduleFolders as $moduleFolder) {
-            if (file_exists(app_path() . '/../modules/' . $moduleFolder . '/Manifest.php')) {
-                include(app_path() . '/../modules/' . $moduleFolder . '/Manifest.php');
+            if (file_exists(app_path() . '/modules/' . $moduleFolder . '/Manifest.php')) {
+                include(app_path() . '/modules/' . $moduleFolder . '/Manifest.php');
                 //Create a object from the manifest file
                 $tmpObj = new $moduleFolder;
                 //Store the module object into the array
@@ -51,10 +51,10 @@ class ModuleHelper {
 
     public static function enableModule($package) {
         //Make a scandir of the modules dir
-        $moduleFolders = scandir(app_path() . '/../modules/');
+        $moduleFolders = scandir(app_path() . '/modules/');
         foreach ($moduleFolders as $moduleFolder) {
-            if (file_exists(app_path() . '/../modules/' . $moduleFolder . '/Manifest.php')) {
-                include(app_path() . '/../modules/' . $moduleFolder . '/Manifest.php');
+            if (file_exists(app_path() . '/modules/' . $moduleFolder . '/Manifest.php')) {
+                include(app_path() . '/modules/' . $moduleFolder . '/Manifest.php');
                 //Create a object from the manifest file
                 $tmpObj = new $moduleFolder;
                 //If we found the package, enable it
@@ -97,7 +97,7 @@ class ModuleHelper {
 
     public static function runMigrations($path) {
         //execute the migrations
-        exec('php ' . app_path() . '/../' . 'artisan migrate --path=/modules/' . $path . '/migrations/');
+        exec('php ' . app_path() . '/../' . 'artisan migrate --path=/app/modules/' . $path . '/migrations/');
     }
 
     /*
