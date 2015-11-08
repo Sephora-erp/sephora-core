@@ -33,5 +33,12 @@ class example {
             'package' => 'sephora.basic.example'
         ]
     ];
-
+    //Routes data
+    public $routes = [
+        0 => [
+            'type' => 'GET',
+            'url' => '/example/child',
+            'action' => 'HomeController@showHome'
+        ]
+    ];
 }

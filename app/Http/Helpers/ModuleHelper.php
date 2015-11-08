@@ -5,6 +5,7 @@ namespace App\Http\Helpers;
 use stdClass;
 use App\Http\Models\Modules;
 use App\Http\Models\Menus;
+use App\Http\Models\Routes;
 
 class ModuleHelper {
     /*
@@ -67,6 +68,8 @@ class ModuleHelper {
                     ModuleHelper::runMigrations($moduleFolder);
                     //Create the menus
                     ModuleHelper::setMenus($tmpObj->menus);
+                    //Activate the routes
+                    ModuleHelper::setRoutes($tmpObj->routes);
                     //Save it
                     $moduleToEnable->save();
                 }
@@ -82,6 +85,7 @@ class ModuleHelper {
 
     public static function disableModule($package) {
         $module = Modules::where('package', '=', $package)->first();
+        ModuleHelper::unSetMenus($package);
         $module->delete();
     }
 
@@ -123,6 +127,38 @@ class ModuleHelper {
                 $newMenu->package = $menu['package'];
             //Create the menu entry
             $newMenu->save();
+        }
+    }
+
+    /*
+     * Erases the menu entries after desactivating the module
+     * 
+     * @param {String} $package - The package name
+     */
+
+    public static function unSetMenus($package) {
+        $menusToDelete = Menus::where('package', '=', $package)->get();
+        foreach ($menusToDelete as $menu) {
+            $menu->delete();
+        }
+    }
+
+    /*
+     * This function set's the routes of the module
+     * 
+     * @param {Mixed[]} $routes - The routes array with the available routes
+     * for the module
+     * 
+     */
+    public static function setRoutes($routes) {
+        foreach($routes as $route){
+            $tmpRoute = new Routes();
+            //Set attributes
+            $tmpRoute->type = $route['type'];
+            $tmpRoute->url = $route['url'];
+            $tmpRoute->action = $route['action'];
+            //Save the route
+            $tmpRoute->save();
         }
     }
 

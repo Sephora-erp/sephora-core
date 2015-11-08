@@ -76,14 +76,14 @@ class MenusHelper {
                  </a>
                  <ul class="treeview-menu">';
                 foreach ($top->children as $child) {
-                    $html.= '<li><a href="'.$child->url.'"><i class="fa fa-circle-o"></i> '.$child->title.'</a></li>';
+                    $html.= '<li><a href="'.\URL::to($child->url).'"><i class="fa fa-circle-o"></i> '.$child->title.'</a></li>';
                 }
                 $html.='</ul>
                </li>';
             } else {
                 //Doesn't have children, is a link
                 $html.='<li>
-                    <a href="' . $top->menu->url . '">
+                    <a href="' . \URL::to($top->menu->url) . '">
                       <i class="' . $top->menu->icon . '"></i> <span>' . $top->menu->title . '</span>
                     </a>
                   </li>';
