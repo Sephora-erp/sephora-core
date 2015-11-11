@@ -73,9 +73,11 @@ class ModuleHelper {
                     //Activate the routes
                     ModuleHelper::setRoutes($tmpObj->routes);
                     //Register the triggers
-                    ModuleHelper::enableTriggers($tmpObj->basic['package'], $moduleFolder, $tmpObj->triggers);
+                    if ($tmpObj->basic['has_triggers'] == 1)
+                        ModuleHelper::enableTriggers($tmpObj->basic['package'], $moduleFolder, $tmpObj->triggers);
                     //Register the hooks
-                    ModuleHelper::enableHooks($tmpObj->basic['package'], $moduleFolder, $tmpObj->hooks);
+                    if ($tmpObj->basic['has_hooks'] == 1)
+                        ModuleHelper::enableHooks($tmpObj->basic['package'], $moduleFolder, $tmpObj->hooks);
                     //Save it
                     $moduleToEnable->save();
                 }
