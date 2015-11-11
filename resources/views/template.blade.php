@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Helpers\MenusHelper;
+use App\Http\Helpers\HookHelper;
 ?>
 <!DOCTYPE html>
 <html>
@@ -37,6 +38,14 @@ use App\Http\Helpers\MenusHelper;
         <!-- datatables css -->
         <link rel="stylesheet" href="{{URL::to('/')}}/theme/plugins/datatables/dataTables.bootstrap.css">
         <link rel="stylesheet" href="{{URL::to('/')}}/theme/plugins/datatables/jquery.dataTables.css">
+
+        <!-- css hook -->
+
+        <?php
+        HookHelper::fireHook('headerCss', null);
+        ?>
+        <!-- //css hook -->
+
         <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
