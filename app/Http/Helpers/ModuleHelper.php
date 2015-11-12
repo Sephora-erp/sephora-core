@@ -71,7 +71,7 @@ class ModuleHelper {
                     //Create the menus
                     ModuleHelper::setMenus($tmpObj->menus);
                     //Activate the routes
-                    ModuleHelper::setRoutes($tmpObj->routes);
+                    ModuleHelper::setRoutes($tmpObj->routes, $tmpObj->basic['package']);
                     //Register the triggers
                     if ($tmpObj->basic['has_triggers'] == 1)
                         ModuleHelper::enableTriggers($tmpObj->basic['package'], $moduleFolder, $tmpObj->triggers);
@@ -99,6 +99,8 @@ class ModuleHelper {
         ModuleHelper::disableTriggers($package);
         //Disables the triggers
         ModuleHelper::disableHooks($package);
+        //Deletes the routes
+        ModuleHelper::unSetRoutes($package);
         //Delete
         $module->delete();
     }
@@ -162,16 +164,18 @@ class ModuleHelper {
      * 
      * @param {Mixed[]} $routes - The routes array with the available routes
      * for the module
+     * @param {String} $package - The package identifier
      * 
      */
 
-    public static function setRoutes($routes) {
+    public static function setRoutes($routes, $package) {
         foreach ($routes as $route) {
             $tmpRoute = new Routes();
             //Set attributes
             $tmpRoute->type = $route['type'];
             $tmpRoute->url = $route['url'];
             $tmpRoute->action = $route['action'];
+            $tmpRoute->package = $package;
             //Save the route
             $tmpRoute->save();
         }
@@ -242,6 +246,19 @@ class ModuleHelper {
         $hooks = Hooks::where('package', '=', $package)->get();
         foreach ($hooks as $hook) {
             $hook->delete();
+        }
+    }
+
+    /*
+     * Erases the routes enabled for the module
+     * 
+     * @param {String} $package - The package / UUID
+     */
+
+    public static function unSetRoutes($package) {
+        $routes = Routes::where('package', '=', $package)->get();
+        foreach($routes as $route){
+            $route->delete();
         }
     }
 
