@@ -6,6 +6,8 @@ use stdClass;
 use App\Http\Models\Modules;
 use App\Http\Models\Menus;
 use App\Http\Models\Routes;
+use App\Http\Models\Triggers;
+use App\Http\Models\Hooks;
 
 class ModuleHelper {
     /*
@@ -70,6 +72,12 @@ class ModuleHelper {
                     ModuleHelper::setMenus($tmpObj->menus);
                     //Activate the routes
                     ModuleHelper::setRoutes($tmpObj->routes);
+                    //Register the triggers
+                    if ($tmpObj->basic['has_triggers'] == 1)
+                        ModuleHelper::enableTriggers($tmpObj->basic['package'], $moduleFolder, $tmpObj->triggers);
+                    //Register the hooks
+                    if ($tmpObj->basic['has_hooks'] == 1)
+                        ModuleHelper::enableHooks($tmpObj->basic['package'], $moduleFolder, $tmpObj->hooks);
                     //Save it
                     $moduleToEnable->save();
                 }
@@ -85,7 +93,13 @@ class ModuleHelper {
 
     public static function disableModule($package) {
         $module = Modules::where('package', '=', $package)->first();
+        //Disables the menus
         ModuleHelper::unSetMenus($package);
+        //Disables the triggers
+        ModuleHelper::disableTriggers($package);
+        //Disables the triggers
+        ModuleHelper::disableHooks($package);
+        //Delete
         $module->delete();
     }
 
@@ -150,8 +164,9 @@ class ModuleHelper {
      * for the module
      * 
      */
+
     public static function setRoutes($routes) {
-        foreach($routes as $route){
+        foreach ($routes as $route) {
             $tmpRoute = new Routes();
             //Set attributes
             $tmpRoute->type = $route['type'];
@@ -159,6 +174,74 @@ class ModuleHelper {
             $tmpRoute->action = $route['action'];
             //Save the route
             $tmpRoute->save();
+        }
+    }
+
+    /*
+     * Enables the triggers for the module, this registers the
+     * trigger in the triggers table
+     * 
+     * @param {String} $package - The package / UUID string
+     * @param {String} $folder - The folder of the module
+     * @param {$mixed[]} $triggers - An array with all the triggers
+     */
+
+    public static function enableTriggers($package, $folder, $triggers) {
+        foreach ($triggers as $trigger) {
+            $tmpTrigger = new Triggers();
+            //Set properties
+            $tmpTrigger->folder = $folder;
+            $tmpTrigger->package = $package;
+            $tmpTrigger->action = $trigger['action'];
+            //Store the trigger
+            $tmpTrigger->save();
+        }
+    }
+
+    /*
+     * Erases the triggers for the triggers table
+     * 
+     * @param {String} $package - The package / UUID
+     */
+
+    public static function disableTriggers($package) {
+        $triggers = Triggers::where('package', '=', $package)->get();
+        foreach ($triggers as $trigger) {
+            $trigger->delete();
+        }
+    }
+
+    /*
+     * Enables the hooks for the module, this registers the
+     * hook in the hooks table
+     * 
+     * @param {String} $package - The package / UUID string
+     * @param {String} $folder - The folder of the module
+     * @param {$mixed[]} $hooks - An array with all the hooks
+     */
+
+    public static function enableHooks($package, $folder, $hooks) {
+        foreach ($hooks as $hook) {
+            $tmpHook = new Hooks();
+            //Set properties
+            $tmpHook->folder = $folder;
+            $tmpHook->package = $package;
+            $tmpHook->container = $hook['container'];
+            //Store the trigger
+            $tmpHook->save();
+        }
+    }
+
+    /*
+     * Erases the hooks for the hooks table
+     * 
+     * @param {String} $package - The package / UUID
+     */
+
+    public static function disableHooks($package) {
+        $hooks = Hooks::where('package', '=', $package)->get();
+        foreach ($hooks as $hook) {
+            $hook->delete();
         }
     }
 

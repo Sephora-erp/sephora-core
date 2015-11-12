@@ -41,4 +41,16 @@ class example {
             'action' => '\App\modules\example\core\controllers\ExampleController@actionTest'
         ]
     ];
+    //Triggers
+    public $triggers = [
+        0 => [
+            'action' => 'pageLoad'
+        ]
+    ];
+    //Hooks declaration
+    public $hooks = [
+        0 => [
+            'container' => 'footer',
+        ]
+    ];
 }
