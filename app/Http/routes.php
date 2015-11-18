@@ -16,6 +16,7 @@ Route::get('/', 'HomeController@showHome');
 Route::get('/settings', 'SettingsController@showHome');
 Route::get('/settings/enable-module/{package}', 'SettingsController@enableModule');
 Route::get('/settings/disable-module/{package}', 'SettingsController@disableModule');
+Route::post('/settings/update', 'SettingsController@updateGeneral');
 
 /*
  * Route Injector

@@ -20,6 +20,7 @@ use App\Http\Helpers\HookHelper;
         <!-- Theme style -->
         <link rel="stylesheet" href="{{URL::to('/')}}/theme/css/AdminLTE.min.css">
         <link rel="stylesheet" href="{{URL::to('/')}}/theme/css/custom.css">
+        <link rel="stylesheet" href="{{URL::to('/')}}/theme/css/animate.css">
         <!-- AdminLTE Skins. Choose a skin from the css/skins
              folder instead of downloading all of them to reduce the load. -->
         <link rel="stylesheet" href="{{URL::to('/')}}/theme/css/skins/_all-skins.min.css">
