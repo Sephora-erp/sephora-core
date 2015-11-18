@@ -2,6 +2,7 @@
 
 use App\Http\Helpers\MenusHelper;
 use App\Http\Helpers\HookHelper;
+use App\Http\Controllers\SettingsController;
 ?>
 <!DOCTYPE html>
 <html>
@@ -156,6 +157,17 @@ use App\Http\Helpers\HookHelper;
 
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
+                @if(strlen(SettingsController::fetchSetting('company_nif'))<4)
+                <div class='row' style="padding-top: 15px;">
+                    <div class='col-md-10 col-md-offset-1'>
+                        <div class="callout callout-warning">
+                            <h4>Sephora's configuration incomplete</h4>
+
+                            <p>Your ERP configuration is not complete yet, you need to set the basic configuration under the settings section.</p>
+                        </div>
+                    </div>
+                </div>
+                @endif
                 @yield('content')
             </div><!-- /.content-wrapper -->
             <footer class="main-footer">
