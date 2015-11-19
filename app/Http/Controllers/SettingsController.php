@@ -15,7 +15,8 @@ class SettingsController extends Controller {
 
     public function showHome() {
         $modules = ModuleHelper::fetchModuleList();
-        return view('settings.home', ['modules' => $modules]);
+        $users = User::all();
+        return view('settings.home', ['modules' => $modules, 'users' => $users]);
     }
 
     /*
@@ -119,6 +120,38 @@ class SettingsController extends Controller {
         } else {
             return '';
         }
+    }
+
+    /*
+     * Creates / enables a new user in the database
+     * 
+     * @param {Request} $request - The request data
+     * 
+     * @return {Redirect} Reditect to the settings page
+     */
+
+    public function createUser(Request $request) {
+        $data = $request->all();
+        $user = new User();
+        //Set attributtes
+        $user->name = $data['name'];
+        $user->email = $data['email'];
+        $user->password = \Illuminate\Support\Facades\Hash::make($data['password']);
+        //Create and return
+        $user->save();
+        return redirect('/settings');
+    }
+
+    /*
+     * Deletes the user using their id, and later redirect's to the settings page
+     * 
+     * @param {Integer} $id - The user's id
+     */
+
+    public function deleteUser($id) {
+        $user = User::find($id);
+        $user->delete();
+        return redirect('/settings');
     }
 
 }

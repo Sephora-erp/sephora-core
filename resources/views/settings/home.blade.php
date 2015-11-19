@@ -11,6 +11,8 @@
                 <ul class="nav nav-tabs">
                     <li class="active animated fadeIn"><a href="#tab_modules" data-toggle="tab"><i class="fa fa-th-large"></i> Modules</a></li>
                     <li class="animated fadeIn"><a href="#tab_general" data-toggle="tab"><i class="fa fa-indent"></i> Company Info</a></li>
+                    <li class="animated fadeIn"><a href="#tab_users" data-toggle="tab"><i class="fa fa-user"></i> Users</a></li>
+                    <li class="animated fadeIn"><a href="#tab_updates" data-toggle="tab"><i class="fa fa-recycle"></i> Updates</a></li>
                     <li class="pull-right animated fadeIn"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>
                 </ul>
                 <div class="tab-content">
@@ -19,6 +21,12 @@
                     </div><!-- /.tab-pane -->
                     <div class="tab-pane" id="tab_general">
                         @include('settings.general')
+                    </div><!-- /.tab-pane -->
+                    <div class="tab-pane" id="tab_users">
+                        @include('settings.users')
+                    </div><!-- /.tab-pane -->
+                    <div class="tab-pane" id="tab_updates">
+                        @include('settings.updates')
                     </div><!-- /.tab-pane -->
                 </div><!-- /.tab-content -->
             </div><!-- nav-tabs-custom -->
