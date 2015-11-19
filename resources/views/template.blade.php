@@ -3,6 +3,7 @@
 use App\Http\Helpers\MenusHelper;
 use App\Http\Helpers\HookHelper;
 use App\Http\Controllers\SettingsController;
+use App\User;
 ?>
 <!DOCTYPE html>
 <html>
@@ -157,6 +158,20 @@ use App\Http\Controllers\SettingsController;
 
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
+              @if(!User::haveAnyUsers())
+              <div class='row' style="padding-top: 15px;">
+                  <div class='col-md-10 col-md-offset-1'>
+                      <div class="callout callout-danger">
+                          <h4>Sephora's user's problem</h4>
+
+                          <p>Your ERP Does not have any user, so, the login and all the security systems are disabled until you create the first user, you can do this under the "Settings" section and later in the "Users" subsection in your left <menu>
+                            
+                          </menu></p>
+                      </div>
+                  </div>
+              </div>
+              @endif
+
                 @if(strlen(SettingsController::fetchSetting('company_nif'))<4)
                 <div class='row' style="padding-top: 15px;">
                     <div class='col-md-10 col-md-offset-1'>

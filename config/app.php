@@ -1,4 +1,11 @@
 <?php
+//Constants defines
+
+define('VERSION', 'Tiger');
+define('V_MAYOR', '0');
+define('V_MINOR', '0');
+define('V_REVISION', '1');
+define('BRANCH', 'unstable');
 
 return [
 

@@ -36,4 +36,16 @@ class User extends Model implements AuthenticatableContract,
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
+
+    /*
+     * This function will return true or false if there are any users in db
+     */
+     public static function haveAnyUsers()
+     {
+       $users = User::all();
+       if(count($users)>0)
+          return true;
+       else
+          return false;
+     }
 }
