@@ -63,7 +63,7 @@ use App\User;
 
             <header class="main-header">
                 <!-- Logo -->
-                <a href="index2.html" class="logo">
+                <a href="" class="logo">
                     <!-- mini logo for sidebar mini 50x50 pixels -->
                     <span class="logo-lg"><b>Sephora</b> ERP</span>
                 </a>
@@ -81,22 +81,24 @@ use App\User;
                             <!-- User Account: style can be found in dropdown.less -->
                             <li class="dropdown user user-menu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <img src="" class="user-image" alt="User Image">
-                                    <span class="hidden-xs">User name</span>
+                                    <img src="{{URL::to('/theme/img/avatar.png')}}" class="user-image" alt="User Image">
+                                      @if(\Auth::user())
+                                        <span class="hidden-xs">{{\Auth::user()->name}}</span>
+                                      @endif
                                 </a>
                                 <ul class="dropdown-menu">
                                     <!-- User image -->
                                     <li class="user-header">
-                                        <img src="" class="img-circle" alt="User Image">
+                                        <img src="{{URL::to('/theme/img/avatar.png')}}" class="img-circle" alt="User Image">
                                         <p>
                                         </p>
                                     </li>
                                     <li class="user-footer">
                                         <div class="pull-left">
-                                            <a href="{{URL::to('/settings')}}" class="btn btn-default btn-flat">Ajustes</a>
+                                            <a href="{{URL::to('/settings')}}" class="btn btn-default btn-flat">Settings</a>
                                         </div>
                                         <div class="pull-right">
-                                            <a href="{{URL::to('/auth/logout')}}" class="btn btn-default btn-flat">Cerrar sesión</a>
+                                            <a href="{{URL::to('/auth/logout')}}" class="btn btn-default btn-flat">Log out</a>
                                         </div>
                                     </li>
                                 </ul>
@@ -113,10 +115,12 @@ use App\User;
                     <!-- Sidebar user panel -->
                     <div class="user-panel">
                         <div class="pull-left image">
-                            <img src="{{URL::to('/images')}}/.png" class="img-circle" alt="User Image">
+                            <img src="{{URL::to('/theme/img/avatar.png')}}" class="img-circle" alt="User Image">
                         </div>
                         <div class="pull-left info">
-                            <p>User name</p>
+                          @if(\Auth::user())
+                            <p>{{\Auth::user()->name}}</p>
+                          @endif
                             <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                         </div>
                     </div>
@@ -165,7 +169,7 @@ use App\User;
                           <h4>Sephora's user's problem</h4>
 
                           <p>Your ERP Does not have any user, so, the login and all the security systems are disabled until you create the first user, you can do this under the "Settings" section and later in the "Users" subsection in your left <menu>
-                            
+
                           </menu></p>
                       </div>
                   </div>
