@@ -204,8 +204,8 @@ use App\User;
         <!-- Datatables -->
         <script></script>
         <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-        <script src="{{URL::to('/')}}/plugins/datatables/jquery.dataTables.js"></script>
-        <script src="{{URL::to('/')}}/plugins/datatables/dataTables.bootstrap.js"></script>
+        <script src="{{URL::to('/')}}/theme/plugins/datatables/jquery.dataTables.js"></script>
+        <script src="{{URL::to('/')}}/theme/plugins/datatables/dataTables.bootstrap.js"></script>
         <!-- jQuery UI 1.11.4 -->
         <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
         <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
