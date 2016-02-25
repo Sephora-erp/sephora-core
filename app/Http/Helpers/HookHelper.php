@@ -20,7 +20,7 @@ class HookHelper {
             //Instantiate the hooks class of the module
             if(file_exists(app_path() . '/modules/' . $hook->folder . '/hooks/listener.php')){
                 //If exists, import the file
-                require(app_path() . '/modules/' . $hook->folder . '/hooks/listener.php');
+                require_once(app_path() . '/modules/' . $hook->folder . '/hooks/listener.php');
                 //Prepare classname
                 $className = $hook->folder.'Hook';
                 //Instantiate the new object

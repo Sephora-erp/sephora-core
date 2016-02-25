@@ -6,6 +6,7 @@ use stdClass;
 use App\Http\Models\Modules;
 use App\Http\Models\Menus;
 use App\Http\Models\Routes;
+use App\Http\Models\RoutesUnsafe;
 use App\Http\Models\Triggers;
 use App\Http\Models\Hooks;
 
@@ -72,6 +73,8 @@ class ModuleHelper {
                     ModuleHelper::setMenus($tmpObj->menus);
                     //Activate the routes
                     ModuleHelper::setRoutes($tmpObj->routes, $tmpObj->basic['package']);
+                    if(isset($tmpObj->unsafeRoutes))
+                        ModuleHelper::setUnsafeRoutes($tmpObj->unsafeRoutes, $tmpObj->basic['package']);
                     //Register the triggers
                     if ($tmpObj->basic['has_triggers'] == 1)
                         ModuleHelper::enableTriggers($tmpObj->basic['package'], $moduleFolder, $tmpObj->triggers);
@@ -182,6 +185,28 @@ class ModuleHelper {
     }
 
     /*
+     * This function set's the unsafe routes of the module
+     * 
+     * @param {Mixed[]} $routes - The routes array with the available routes
+     * for the module
+     * @param {String} $package - The package identifier
+     * 
+     */
+
+    public static function setUnsafeRoutes($routes, $package) {
+        foreach ($routes as $route) {
+            $tmpRoute = new RoutesUnsafe();
+            //Set attributes
+            $tmpRoute->type = $route['type'];
+            $tmpRoute->url = $route['url'];
+            $tmpRoute->action = $route['action'];
+            $tmpRoute->package = $package;
+            //Save the route
+            $tmpRoute->save();
+        }
+    }
+
+    /*
      * Enables the triggers for the module, this registers the
      * trigger in the triggers table
      * 
@@ -257,7 +282,13 @@ class ModuleHelper {
 
     public static function unSetRoutes($package) {
         $routes = Routes::where('package', '=', $package)->get();
+        $routesUnsafe = RoutesUnsafe::where('package', '=', $package)->get();
+        //Delete safe-routes
         foreach($routes as $route){
+            $route->delete();
+        }
+        //Delete unsafe-routes
+        foreach($routesUnsafe as $route){
             $route->delete();
         }
     }
