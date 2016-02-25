@@ -55,3 +55,27 @@ Route::group(['middleware' => ['auth']], function()
       }
   }
 });
+  /*
+   * Unsafe Route Injector
+   */
+  //Check if the routes table exist's before using it (For example to protect app to break in the 1º migration stage)
+
+  if (Schema::hasTable('routes')) {
+  //Inject the routes
+      foreach (RouteHelper::fetchUnsafeRoutes() as $route) {
+          switch ($route->type) {
+              case "GET":
+                  Route::get($route->url, $route->action);
+                  break;
+              case "POST":
+                  Route::post($route->url, $route->action);
+                  break;
+              case "PUT":
+                  Route::put($route->url, $route->action);
+                  break;
+              case "DELETE":
+                  Route::delete($route->url, $route->action);
+                  break;
+          }
+      }
+  }
